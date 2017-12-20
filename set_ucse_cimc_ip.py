@@ -326,7 +326,7 @@ def build_router_list(routers, username, password, verifyOnly):
 
     # Get configuration for each flex-connect group
     for line in routers:
-        if len(line.strip().split(',')) != 4:
+        if len(line.strip().split(',')) == 4:
             myRouter = Router()
             myRouter.ipAddress = line.strip().split(',')[0]
             myRouter.ucseIpAddress = line.strip().split(',')[1]
@@ -473,7 +473,7 @@ def main(**kwargs):
     myFile.close()
     
     # Log info
-    logger.info("Router List Imported")
+    logger.info("Input File Imported")
     
     # Build router List
     myRouters = build_router_list(routerList, args.username, args.password, args.verify)
