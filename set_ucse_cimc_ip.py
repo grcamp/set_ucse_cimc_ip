@@ -163,6 +163,9 @@ class Router:
             remote_conn.send("no shutdown")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
+            remote_conn.send("end")
+            remote_conn.send("\n")
+            myOutput = self._wait_for_prompt(remote_conn, myLogFile)
 
             # Obtain interface configuration
             remote_conn.send("show running-config")
