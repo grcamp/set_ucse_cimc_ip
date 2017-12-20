@@ -59,7 +59,7 @@ class Router:
         self.ucseIpAddress = ""
         self.ucseSubnetMask = ""
         self.ucseGateway = ""
-        self.interfaces = {}
+        self.interfaces = []
         self.deviceNumber = 0
         self.verifyOnly = False
         self.postcheckPassed = False
@@ -126,6 +126,8 @@ class Router:
                                                                   str(self.deviceNumber), str(deviceCount)))
 
             # Clear interface configuration
+            logger.info("Starting Config for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
+                                                                   str(deviceCount)))
             remote_conn.send("config t")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
@@ -166,11 +168,15 @@ class Router:
             remote_conn.send("end")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
+            # Log completion
+            logger.info("Completed Config for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
+                                                                   str(deviceCount)))
 
             # Obtain interface configuration
             remote_conn.send("show running-config")
             remote_conn.send("\n")
-            myOutput = self._wait_for_prompt(remote_conn, myLogFile, 30)
+            myOutput = self._wait_for_prompt(remote_conn, myLogFile, timeout=30)
+            logger.info("debug 1")
             self.interfaces = get_interfaces(myOutput)
 
             # Run post checks
