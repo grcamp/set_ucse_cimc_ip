@@ -176,13 +176,19 @@ class Router:
             remote_conn.send("show running-config")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile, timeout=30)
-            logger.info("debug 1")
             self.interfaces = get_interfaces(myOutput)
 
             # Run post checks
-            logger.info("Running Postchecks for {}/{} - {} of {}".format(self.ipAddress, self.hostname,
-                                                                         str(self.deviceNumber), str(deviceCount)))
+            logger.info("Running Postchecks for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
+                                                                      str(deviceCount)))
             self.postcheckPassed = self._postchecks()
+
+            if self.postcheckPassed:
+                logger.info("Postchecks Passed for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
+                                                                         str(deviceCount)))
+            else:
+                logger.info("Postchecks Failed for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
+                                                                         str(deviceCount)))
 
             # Logout
             remote_conn.send("exit")
