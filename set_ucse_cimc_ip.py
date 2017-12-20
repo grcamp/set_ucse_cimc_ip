@@ -2,7 +2,7 @@
 #########################################################################
 # Gregory Camp
 # grcamp@cisco.com
-# waas_file_download
+# set_ucse_cimc_ip
 #
 # Testing Summary:
 #   Tested on 2921 Routers running 15.4
@@ -10,10 +10,12 @@
 # Usage:
 #   ./waas_file_download.py input.csv -u username -p password
 #
+# Input File Format:
+# Router IP Address, CIMC IP Address, CIMC Subnet Mask, CIMC Default Gateway
+#
 # Global Variables:
 #   logger = Used for Debug output and script info
 #   WORKER_COUNT = Maximum number of simultaneous threads
-#   currentDevice = Used for tracking the active device threads
 #   deviceCount = Used for tracking total device threads
 ##########################################################################
 
