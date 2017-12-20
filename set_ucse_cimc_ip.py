@@ -171,7 +171,7 @@ class Router:
             remote_conn.send("show running-config")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile, 30)
-            interfaces = get_interfaces(myOutput)
+            self.interfaces = get_interfaces(myOutput)
 
             # Run post checks
             logger.info("Running Postchecks for {}/{} - {} of {}".format(self.ipAddress, self.hostname,
