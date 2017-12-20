@@ -128,6 +128,9 @@ class Router:
             # Clear interface configuration
             logger.info("Starting Config for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
                                                                    str(deviceCount)))
+            remote_conn.send("write mem", timeout=30)
+            remote_conn.send("\n")
+            myOutput = self._wait_for_prompt(remote_conn, myLogFile)
             remote_conn.send("config t")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
@@ -186,6 +189,9 @@ class Router:
             if self.postcheckPassed:
                 logger.info("Postchecks Passed for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
                                                                          str(deviceCount)))
+                remote_conn.send("write mem", timeout=30)
+                remote_conn.send("\n")
+                myOutput = self._wait_for_prompt(remote_conn, myLogFile)
             else:
                 logger.info("Postchecks Failed for {} - {} of {}".format(self.hostname, str(self.deviceNumber),
                                                                          str(deviceCount)))
