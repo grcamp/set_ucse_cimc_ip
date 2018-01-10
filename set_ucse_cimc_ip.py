@@ -437,6 +437,8 @@ def get_interfaces(config):
             # Check for ip address
             if lines[i].strip().startswith("ip address unnumbered") == True:
                 interface['ipAddress'] = "{} {}".format(lines[i].strip().split()[2], lines[i].strip().split()[3])
+            elif lines[i].strip().startswith("ip address dhcp") == True:
+                interface['ipAddress'] = lines[i].strip().split()[2]
             elif lines[i].strip().startswith("ip address") == True:
                 interface['ipAddress'] = lines[i].strip().split()[2]
                 interface['mask'] = lines[i].strip().split()[3]
@@ -494,7 +496,7 @@ def main(**kwargs):
     routerList = [i for i in myFile]
     # Close file
     myFile.close()
-    
+
     # Log info
     logger.info("Input File Imported")
     
