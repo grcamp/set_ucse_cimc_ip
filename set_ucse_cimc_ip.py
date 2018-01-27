@@ -148,7 +148,7 @@ class Router:
             remote_conn.send("interface ucse1/0")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
-            remote_conn.send("no ip address")
+            remote_conn.send("ip unnumbered Loopback0")
             remote_conn.send("\n")
             myOutput = self._wait_for_prompt(remote_conn, myLogFile)
             remote_conn.send("imc ip address {} {} default-gateway {}".format(self.ucseIpAddress, self.ucseSubnetMask,
@@ -302,7 +302,7 @@ class Router:
                 # Loop through config to identify remaining criteria
                 for line in interface['config']:
                     # if no ip address is set flag
-                    if line == "no ip address":
+                    if line == "ip unnumbered Loopback0":
                         ucse10ipAddr = True
                     # check if imc ip is set
                     elif line == "imc ip address {} {} default-gateway {}".format(self.ucseIpAddress,
@@ -377,8 +377,9 @@ def configure_router_worker(device):
     # Declare variables
     global deviceCount
 
-    # Start thread at time of device number value
-    time.sleep(device.deviceNumber)
+    if device.deviceNumber < 100:
+        # Start thread at time of device number value
+        time.sleep(device.deviceNumber)
 
     logger.info("Starting worker for %s - %s of %s" % (str(device.ipAddress), str(device.deviceNumber), str(deviceCount)))
     i = device.configure_router()
